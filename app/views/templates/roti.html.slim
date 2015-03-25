@@ -1,5 +1,20 @@
-.ng-cloak
+.ng-cloak(ng-init="init()")
   .container
     .col-md-6
-      ' controller: {{ name }}
-    .col-md-6
+      table.table.table-striped
+        thead
+          tr(style="font-weight: bold")
+            td
+              ' #
+            td
+              ' Nama
+            td
+              ' Harga
+        tbody
+          tr(ng-repeat="roti in rotis")
+            td
+              ' {{ roti.id }}
+            td
+              ' {{ roti.nama }}
+            td
+              ' {{ roti.harga }}

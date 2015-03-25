@@ -1,6 +1,8 @@
 class Api::RotisController < ApplicationController
 
 	def index
+    rotis = Roti.all
+    render json: rotis, status: 201 
 	end
 
 	def create
