@@ -1,0 +1,29 @@
+{
+  "name": "Kizuna-Bread",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "latest",
+    "bootstrap": "latest",
+    "lodash": "latest",
+    "underscore": "latest",
+    "underscore.string": "latest",
+    "font-awesome": "latest",
+    "angular-route": "latest",
+    "angular-resource": "latest"
+  },
+  "authors": [
+    "meriororen <meriororen@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "../libs",
+    "test",
+    "tests"
+  ]
+}
