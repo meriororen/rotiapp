@@ -1,7 +1,10 @@
 .ng-cloak(ng-init="init()")
   .container
     .col-md-6
-      table.table.table-striped
+      h4
+        ' Daftar Roti
+        hr
+      table.table.table-hover.table-condensed
         thead
           tr(style="font-weight: bold")
             td
@@ -10,11 +13,35 @@
               ' Nama
             td
               ' Harga
+            td
+              ' &nbsp;
         tbody
           tr(ng-repeat="roti in rotis")
             td
-              ' {{ roti.id }}
+              ' {{ $index+1 }}
             td
               ' {{ roti.nama }}
             td
-              ' {{ roti.harga }}
+              ' &yen; {{ roti.harga }}
+            td
+              div.pull-right
+                button.btn.btn-danger.btn-xs.pull-right(type="button" ng-click="deleteRoti(roti)")
+                  i.fa.fa-trash-o
+
+    .col-md-6
+        h4
+          ' Tambahkan Roti
+          hr
+        form#new_roti(ng-submit="addRoti(newRoti)")
+          div
+            input#namaRoti.form-control(type="text" autofocus="autofocus" placeholder="Nama Roti" ng-model="newRoti.nama" data-non-blank)
+          br
+          div.input-group
+            span.input-group-addon &yen;
+            input#hargaRoti.form-control(type="text" autofocus="autofocus" placeholder="Harga Roti" ng-model="newRoti.harga" data-non-blank)
+          br
+          div.input-group.pull-right
+            button.btn.btn-primary(type="submit" ng-disabled="isEmpty(newRoti.harga) || isEmpty(newRoti.nama)") Tambah
+            
+
+          

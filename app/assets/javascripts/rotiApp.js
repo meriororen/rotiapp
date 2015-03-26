@@ -6,3 +6,5 @@ rotiApp.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/rotis', { templateUrl: '/templates/roti.html', controller: 'RotiController' });
   $locationProvider.html5Mode({enabled:true, requireBase: false});
 });
+
+_.mixin(s.exports())
