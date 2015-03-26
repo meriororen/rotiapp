@@ -32,16 +32,16 @@
         h4
           ' Tambahkan Roti
           hr
-        form#new_roti(ng-submit="addRoti(newRoti)")
+        form#new_roti(ng-submit="addRoti(newEntry)")
           div
-            input#namaRoti.form-control(type="text" autofocus="autofocus" placeholder="Nama Roti" ng-model="newRoti.nama" data-non-blank)
+            input#namaRoti.form-control(type="text" autofocus="autofocus" placeholder="Nama Roti" ng-model="newEntry.nama" data-non-blank)
           br
           div.input-group
             span.input-group-addon &yen;
-            input#hargaRoti.form-control(type="text" autofocus="autofocus" placeholder="Harga Roti" ng-model="newRoti.harga" data-non-blank)
+            input#hargaRoti.form-control(type="text" autofocus="autofocus" placeholder="Harga Roti" ng-model="newEntry.harga" data-non-blank)
           br
           div.input-group.pull-right
-            button.btn.btn-primary(type="submit" ng-disabled="isEmpty(newRoti.harga) || isEmpty(newRoti.nama)") Tambah
+            button.btn.btn-primary(type="submit" ng-disabled="isEmpty(newEntry.harga) || isEmpty(newEntry.nama)") Tambah
             
 
           

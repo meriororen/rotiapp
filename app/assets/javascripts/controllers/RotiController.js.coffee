@@ -4,14 +4,13 @@ angular.module('rotiApp').controller "RotiController", ($scope, $route, $routePa
     @rotiService = new Roti(serverErrorHandler)
     $scope.rotis = @rotiService.all()
 
-  $scope.addRoti = (newRoti) ->
-    roti = @rotiService.create(newRoti)
-    console.log(roti.nama)
-    $scope.newRoti.nama = ""
-    $scope.newRoti.harga = ""
+  $scope.addRoti = (newEntry) ->
+    @rotiService.create(newEntry, successHandler)
+    $scope.newEntry.nama = ""
+    $scope.newEntry.harga = ""
 
   $scope.deleteRoti = (roti) ->
-    if confirm("Beneran mau hapus " + roti.nama + "?")
+    if confirm("Beneran mau hapus " + roti.nama + "id(" + roti.id + ")?")
       @rotiService.delete(roti) 
       $scope.rotis.splice($scope.rotis.indexOf(roti), 1)
 
@@ -19,6 +18,9 @@ angular.module('rotiApp').controller "RotiController", ($scope, $route, $routePa
     _.isBlank(str)
 
   serverErrorHandler = ->
-    alert("There was a server error, please reload the page and try again.")
+    alert("Servernya error, coba lagi")
+
+  successHandler = (roti) ->
+    $scope.rotis.push(roti)
 
 

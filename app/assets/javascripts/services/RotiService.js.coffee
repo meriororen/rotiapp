@@ -1,7 +1,8 @@
 angular.module('rotiApp').factory 'Roti', ($resource, $http) ->
   class Roti
     constructor: (errorHandler) ->
-      @service = $resource('/api/rotis/:id', { id: '@id' }, {update: {method: 'PATCH'}})
+      @rotisServ = $resource('/api/rotis')
+      @rotiServ = $resource('/api/rotis/:id', { id: '@id' }, { update: { method: 'PATCH' }})
       @errorHandler = errorHandler
 
       # Fix needed for PATCH
@@ -9,13 +10,13 @@ angular.module('rotiApp').factory 'Roti', ($resource, $http) ->
       defaults.patch = defaults.patch || {}
       defaults.patch['Content-Type'] = 'application/json'
 
-    create: (attrs) ->
-      new @service(attrs).$save (-> null), @errorHandler
-      console.log(attrs)
-      attrs
+    create: (attrs, successHandler) ->
+      new @rotisServ(attrs).$save ((roti) -> 
+        successHandler(roti)
+      ), @errorHandler
 
     delete: (roti) ->
-      new @service().$delete {id: roti.id}, (-> null), @errorHandler
+      new @rotiServ().$delete {id: roti.id},(-> null), @errorHandler
 
     all: ->
-      @service.query((-> null), @errorHandler)
+      @rotisServ.query((-> null), @errorHandler)
