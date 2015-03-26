@@ -11,8 +11,9 @@ angular.module('rotiApp').controller "RotiController", ($scope, $route, $routePa
     $scope.newRoti.harga = ""
 
   $scope.deleteRoti = (roti) ->
-    @rotiService.delete(roti)
-    $scope.rotis.splice($scope.rotis.indexOf(roti), 1)
+    if confirm("Beneran mau hapus " + roti.nama + "?")
+      @rotiService.delete(roti) 
+      $scope.rotis.splice($scope.rotis.indexOf(roti), 1)
 
   $scope.isEmpty = (str) ->
     _.isBlank(str)
