@@ -10,13 +10,15 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require ../libs/angular/angular
-//= require ../libs/angular-route/angular-route
-//= require ../libs/angular-resource/angular-resource
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require ../libs/angular/angular
+//= require ../libs/angular-route/angular-route
+//= require ../libs/angular-resource/angular-resource
 //= require ../libs/lodash/lodash.min
 //= require ../libs/underscore.string/dist/underscore.string.min
+//= require ../libs/bootstrap/js/transition
+//= require ../libs/bootstrap/js/collapse
 //= require rotiApp
 //= require_tree .

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 	
 	namespace :api, defaults: {format: :json} do
 		resources :rotis, only: [:index, :create, :update, :destroy] 
-    resources :rotisales, only: [:index, :create, :update, :destroy]
+    resources :roti_sales, only: [:index, :create, :update, :destroy]
     resources :sales, only: [:index, :create, :update, :destroy]
 	end
 

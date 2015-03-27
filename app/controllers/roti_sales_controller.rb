@@ -1,2 +1,0 @@
-class RotiSalesController < ApplicationController
-end
