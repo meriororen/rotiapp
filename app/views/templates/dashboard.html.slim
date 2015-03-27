@@ -2,13 +2,13 @@
   .col-md-6
     h4 Rangkuman Penjualan
     hr
-      div.panel-group#accordion(role="tablist" aria-multiselectable="true") 
+      div.panel-group#accordion
         div.panel.panel-default(ng-repeat="sale in sales")
-          div.panel-heading(role="tab" id="saleTabHead{{ $index }}")
+          div.panel-heading(id="saleTabHead{{ $index }}")
             h4.panel-title
-              a(data-toggle="collapse" data-parent="#accordion" href="#saleTab{{ $index }}" aria-expanded="true" aria-controls="saleTab{{ $index }}")
+              a(data-toggle="collapse" data-parent="#accordion" data-target="#saleTab{{ $index }}" href="javascript:;")
                 ' Penjualan {{ sale.tanggal | date:'dd MMM yyyy' }}
-          div.panel-collapse.collapse(id="saleTab{{ $index }}" role="tabpanel" aria-labbeledby="saleTabHead{{ $index }}")
+          div.panel-collapse.collapse(id="saleTab{{ $index }}" role="tabpanel")
             div.panel-body
               ' {{ sale.rotis }}
               ' {{ sale.roti_sales }}
