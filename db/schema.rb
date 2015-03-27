@@ -23,9 +23,12 @@ ActiveRecord::Schema.define(version: 20150326234644) do
   add_index "roti_sales", ["sale_id"], name: "index_roti_sales_on_sale_id"
 
   create_table "rotis", force: :cascade do |t|
-    t.string "nama"
-    t.string "harga"
+    t.string  "nama"
+    t.string  "harga"
+    t.integer "roti_id"
   end
+
+  add_index "rotis", ["roti_id"], name: "index_rotis_on_roti_id"
 
   create_table "sales", force: :cascade do |t|
     t.string "lokasi"

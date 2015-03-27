@@ -1,5 +1,5 @@
-angular.module('rotiApp').controller "DashboardController", ($scope, $routeParams) ->
-  $scope.name = "DashboardController"
-  $scope.params = $routeParams
+angular.module('rotiApp').controller "DashboardController", ($scope, $routeParams, Roti, Sale) ->
+  $scope.init = ->
+    @
 
 

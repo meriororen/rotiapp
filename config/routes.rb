@@ -4,10 +4,12 @@ Rails.application.routes.draw do
 	
 	namespace :api, defaults: {format: :json} do
 		resources :rotis, only: [:index, :create, :update, :destroy] 
+    resources :rotisales, only: [:index, :create, :update, :destroy]
+    resources :sales, only: [:index, :create, :update, :destroy]
 	end
 
   # You can have the root of your site routed with "root"
-  root 'dashboard#index'
+  root 'templates#index'
 
   get '/dashboard' => 'templates#index'
   get '/rotis' => 'templates#index'
