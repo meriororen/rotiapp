@@ -13,5 +13,5 @@ angular.module('rotiApp').factory 'Sale', ($resource, $http) ->
         successHandler(rs)
       ), @errorHandler
 
-    all: ->
-      @saleServ.query (-> null), @errorHandler
+    all: (successHandler) ->
+      @saleServ.query ((sales)-> successHandler(sales)), @errorHandler
