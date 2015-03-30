@@ -4,33 +4,38 @@
       h4 
         ' Rangkuman Penjualan 
         small
-          a(href="#" data-toggle="modal" data-target="#addSale")
+          a(href="#" ng-click="open()")
             i.fa.fa-plus-square
     /! add sale modal template
-    /! script(type="text/ng-template" id="AddSaleModal.html")
-    div.modal.fade#addSale
-      div.modal-dialog
-        div.modal-content
-          div.modal-header
-            button.close(type="button" data-dismiss="modal")
-              span &times;
-            h4.modal-title Tambahkan Penjualan
-          div.modal-body
-            form(ng-submit="addRotiSale(newSale)")
-              div.form-group
-                label.control-label(for="sale-tanggal") Tanggal:
-                input.form-control(type="text" placeholder="dd-mm-yyyy" ng-model="newSale.tanggal")
-              div.form-group
-                label.control-label(for="lokasi") Lokasi:
-                select.form-control(ng-model="newSale.lokasi" ng-options="lok as lok.nama for lok in lokasis") 
-          div.modal-footer
-            button.btn.btn-default(type="button" data-dismiss="modal") Tutup
-            button.btn.btn-primary(type="submit") Tambahkan
+    script(type="text/ng-template" id="AddRotiSaleTemplate.html")
+      div.modal-header
+        button.close(type="button" ng-click="cancel()")
+          span &times;
+        h4.modal-title Tambahkan Penjualan
+      div.modal-body
+        form
+          div.form-group
+            label.control-label(for="sale-tanggal") Tanggal:
+            p.input-group
+              input.form-control(type="text" datepicker-popup="dd-MMMM-yyyy" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-model="newRotiSale.tanggal")
+              span.input-group-btn
+                button.btn.btn-default(type="button" ng-click="openDatePicker($event)")
+                  i.glyphicon.glyphicon-calendar
+          div.form-group
+            label.control-label(for="lokasi") Lokasi:
+            select.form-control(ng-model="newRotiSale.lokasi" ng-options="lok as lok.nama for lok in lokasis") 
+          div.form-group
+            label.control-label(for="rotis") Roti:
+            select.form-control(ng-model="newRotiSale.rotis" ng-options="r as r.nama for r in rotis")
+      div.modal-footer
+        button.btn.btn-default(type="button" ng-click="cancel()") Tutup
+        button.btn.btn-primary(type="submit" ng-click="submit(newRotiSale)") Tambahkan
+    /! add sale modal template finish
     hr
       accordion(close-others="true")
         accordion-group(ng-repeat="(tgl, data) in rotisales" is-open="accst.open")
           accordion-heading 
-            ' Penjualan {{ tgl | date:'dd-MMM-yyyy' }}
+            ' Penjualan {{ tgl * 1000 | date:'dd-MMM-yyyy' }}
             i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': accst.open, 'glyphicon-chevron-right': !accst.open}")
           div
             li(ng-repeat="rotisale in data")

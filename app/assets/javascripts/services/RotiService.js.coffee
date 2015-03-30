@@ -18,5 +18,5 @@ angular.module('rotiApp').factory 'Roti', ($resource, $http) ->
     delete: (roti) ->
       new @rotiServ().$delete {id: roti.id},(-> null), @errorHandler
 
-    all: ->
-      @rotisServ.query((-> null), @errorHandler)
+    all: (successHandler) ->
+      @rotisServ.query ((rotis) -> successHandler(rotis)), @errorHandler

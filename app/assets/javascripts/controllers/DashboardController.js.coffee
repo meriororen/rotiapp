@@ -1,17 +1,36 @@
-angular.module('rotiApp').controller "DashboardController", ($scope, $routeParams, RotiSale, Roti, Lokasi, Sale) ->
+angular.module('rotiApp').controller "DashboardController", ($scope, $routeParams, $modal, RotiSale, Roti, Lokasi, Sale) ->
   $scope.init = ->
     @rotiSaleService = new RotiSale(serverErrorHandler)
     @saleService = new Sale(serverErrorHandler)
     @lokasiService = new Lokasi(serverErrorHandler)
+    @rotiService = new Roti(serverErrorHandler)
     @rotiSaleService.all(assignRotiSales)
     @saleService.all(assignSales)
     @lokasiService.all(assignLokasis)
-    $scope.newSale = {} 
+    @rotiService.all(assignRotis)
+    $scope.newRotiSale = {} 
+    $scope.rotis = []
 
   $scope.status = false
   
-  $scope.addRotiSale = (newSale) ->
-    console.log(newSale)
+  $scope.open = ->
+    modalInstance = $modal.open({
+      templateUrl: 'AddRotiSaleTemplate.html',
+      controller: 'AddRotiSaleModalInstanceCtrl',
+      resolve: {
+        newRotiSale: ->
+          $scope.newRotiSale
+        lokasis: ->
+          $scope.lokasis
+        rotis: ->
+          $scope.rotis
+      }
+    })
+
+    modalInstance.result.then saveNewRotiSale, (-> null)
+
+  saveNewRotiSale = (newRotiSale) ->
+    $scope.newRotiSale = newRotiSale
 
   assignRotiSales = (rotisales) ->
     $scope.rotisales = rotisales[0]
@@ -21,8 +40,48 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
   
   assignLokasis = (lokasis) ->
     $scope.lokasis = lokasis
-    $scope.newSale.lokasi = $scope.lokasis[0]
+
+  assignRotis = (rotis) ->
+    console.log(rotis)
+    $scope.rotis = rotis
 
   serverErrorHandler = ->
     alert("Servernya error, coba lagi")
+
+# controller for modal in this page
+#
+angular.module('rotiApp').controller 'AddRotiSaleModalInstanceCtrl', ($scope, $modalInstance, lokasis, rotis) ->
+  $scope.newRotiSale = {}
+  $scope.lokasis = lokasis
+  $scope.rotis = rotis
+  $scope.newRotiSale.lokasi = $scope.lokasis[0]
+  $scope.newRotiSale.rotis = $scope.rotis[0]
+
+  getTodayDate = ->
+    today = new Date()
+    $scope.newRotiSale.tanggal = today.toDateString()
+
+  getTodayDate()
+
+  $scope.submit = (newRotiSale)->
+    console.log(newRotiSale)
+    $modalInstance.close(newRotiSale)
+
+  $scope.cancel = ->
+    $modalInstance.dismiss('cancel')
+
+
+  # for datepicker
+  #
+  $scope.openDatePicker = ($event) ->
+    $event.preventDefault()
+    $event.stopPropagation()
+
+    $scope.opened = true
+
+  $scope.dateOptions = {
+    formatYear: 'yy',
+    startingDay: 1
+  }
+
 
