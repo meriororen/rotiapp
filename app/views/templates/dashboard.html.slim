@@ -4,9 +4,10 @@
       h4 
         ' Rangkuman Penjualan 
         small
-          a(href="javascript:;" data-toggle="modal" data-target="#addSale" ng-click="requestReqdData()")
+          a(href="#" data-toggle="modal" data-target="#addSale")
             i.fa.fa-plus-square
-    /! add sale modal
+    /! add sale modal template
+    /! script(type="text/ng-template" id="AddSaleModal.html")
     div.modal.fade#addSale
       div.modal-dialog
         div.modal-content
@@ -18,7 +19,7 @@
             form(ng-submit="addRotiSale(newSale)")
               div.form-group
                 label.control-label(for="sale-tanggal") Tanggal:
-                input.form-control(type="text")
+                input.form-control(type="text" placeholder="dd-mm-yyyy" ng-model="newSale.tanggal")
               div.form-group
                 label.control-label(for="lokasi") Lokasi:
                 select.form-control(ng-model="newSale.lokasi" ng-options="lok as lok.nama for lok in lokasis") 
@@ -26,25 +27,14 @@
             button.btn.btn-default(type="button" data-dismiss="modal") Tutup
             button.btn.btn-primary(type="submit") Tambahkan
     hr
-      div.panel-group#accordion
-        div.panel.panel-default(ng-repeat="(tgl, data) in rotisales")
-          div.panel-heading(id="rotiSaleHead{{ $index }}")
-            h3.panel-title
-              a(data-toggle="collapse" data-parent="#accordion" data-target="#rotiSale{{ $index }}" href="javascript:;")
-                ' Penjualan {{ tgl | date:'dd MMM yyyy' }}
-          div.panel-collapse.collapse(id="rotiSale{{ $index }}" role="tabpanel")
-            div.panel-body
-              div
-                li(ng-repeat="rotisale in data")
-                  ' {{ rotisale.lokasi.nama }} (Nitip: {{ rotisale.lokasi.penanggung_jawab }})
-                  ul
-                    li(ng-repeat="roti in rotisale.rotis")
-                      ' {{ roti.nama }} {{ roti.jumlah }} buah &times; &yen;{{ roti.harga }}
-        
-  .col-md-6
-    /!h4 
-    /!  Tambahkan Penjualan
-    /!hr
-    /!h4 
-    /!  Links
-    /!hr
+      accordion(close-others="true")
+        accordion-group(ng-repeat="(tgl, data) in rotisales" is-open="accst.open")
+          accordion-heading 
+            ' Penjualan {{ tgl | date:'dd-MMM-yyyy' }}
+            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': accst.open, 'glyphicon-chevron-right': !accst.open}")
+          div
+            li(ng-repeat="rotisale in data")
+              ' {{ rotisale.lokasi.nama }} (Nitip: {{ rotisale.lokasi.penanggung_jawab }})
+              ul
+                li(ng-repeat="roti in rotisale.rotis")
+                  ' {{ roti.nama }} {{ roti.jumlah }} buah &times; &yen;{{ roti.harga }}

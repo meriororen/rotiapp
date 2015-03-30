@@ -11,7 +11,7 @@ class Api::RotiSalesController < ApplicationController
   def rotisales
     @rotisales = Hash.new
     Sale.all.each do |s|
-      @rotisales[s.tanggal.to_formatted_s(:short)] = s.with_rotisales.map do |lokasi, roti_sale|
+      @rotisales[s.tanggal.to_time.to_i] = s.with_rotisales.map do |lokasi, roti_sale|
          { :lokasi => lokasi,
            :rotis => roti_sale.group_by { |rts| rts.roti.nama }.map do |nama, roti_sale| 
            { :nama => nama, 

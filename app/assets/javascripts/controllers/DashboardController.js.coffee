@@ -4,13 +4,14 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
     @saleService = new Sale(serverErrorHandler)
     @lokasiService = new Lokasi(serverErrorHandler)
     @rotiSaleService.all(assignRotiSales)
-  
-  $scope.addRotiSale = (newSale) ->
-    newSale
-
-  $scope.requestReqdData = ->
     @saleService.all(assignSales)
     @lokasiService.all(assignLokasis)
+    $scope.newSale = {} 
+
+  $scope.status = false
+  
+  $scope.addRotiSale = (newSale) ->
+    console.log(newSale)
 
   assignRotiSales = (rotisales) ->
     $scope.rotisales = rotisales[0]
@@ -20,9 +21,8 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
   
   assignLokasis = (lokasis) ->
     $scope.lokasis = lokasis
-    $scope.newSale.lokasi = lokasis[0]
+    $scope.newSale.lokasi = $scope.lokasis[0]
 
   serverErrorHandler = ->
-      alert("Servernya error, coba lagi")
-
+    alert("Servernya error, coba lagi")
 

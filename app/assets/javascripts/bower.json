@@ -9,7 +9,8 @@
     "underscore.string": "latest",
     "font-awesome": "latest",
     "angular-route": "latest",
-    "angular-resource": "latest"
+    "angular-resource": "latest",
+    "angular-bootstrap": "latest"
   },
   "authors": [
     "meriororen <meriororen@gmail.com>"

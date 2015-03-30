@@ -1,4 +1,4 @@
-var rotiApp = angular.module('rotiApp', ['ngRoute', 'ngResource']);
+var rotiApp = angular.module('rotiApp', ['ngRoute', 'ngResource', 'ui.bootstrap']);
 
 rotiApp.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/', { redirectTo: '/dashboard' });
