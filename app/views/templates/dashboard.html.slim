@@ -1,21 +1,45 @@
 .ng-cloak(ng-init="init()")
   .col-md-6
-    h4 Rangkuman Penjualan
+    div
+      h4 
+        ' Rangkuman Penjualan 
+        small
+          a(href="javascript:;" data-toggle="modal" data-target="#addSale" ng-click="requestReqdData()")
+            i.fa.fa-plus-square
+    /! add sale modal
+    div.modal.fade#addSale
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type="button" data-dismiss="modal")
+              span &times;
+            h4.modal-title Tambahkan Penjualan
+          div.modal-body
+            form(ng-submit="addRotiSale(newSale)")
+              div.form-group
+                label.control-label(for="sale-tanggal") Tanggal:
+                input.form-control(type="text")
+              div.form-group
+                label.control-label(for="lokasi") Lokasi:
+                select.form-control(ng-model="newSale.lokasi" ng-options="lok as lok.nama for lok in lokasis") 
+          div.modal-footer
+            button.btn.btn-default(type="button" data-dismiss="modal") Tutup
+            button.btn.btn-primary(type="submit") Tambahkan
     hr
       div.panel-group#accordion
-        div.panel.panel-default(ng-repeat="(tanggal, data) in sales")
-          div.panel-heading(id="saleTabHead{{ $index }}")
-            h4.panel-title
-              a(data-toggle="collapse" data-parent="#accordion" data-target="#saleTab{{ $index }}" href="javascript:;")
-                ' Penjualan {{ tanggal | date:'dd MMM yyyy' }}
-          div.panel-collapse.collapse(id="saleTab{{ $index }}" role="tabpanel")
+        div.panel.panel-default(ng-repeat="(tgl, data) in rotisales")
+          div.panel-heading(id="rotiSaleHead{{ $index }}")
+            h3.panel-title
+              a(data-toggle="collapse" data-parent="#accordion" data-target="#rotiSale{{ $index }}" href="javascript:;")
+                ' Penjualan {{ tgl | date:'dd MMM yyyy' }}
+          div.panel-collapse.collapse(id="rotiSale{{ $index }}" role="tabpanel")
             div.panel-body
               div
-                li(ng-repeat="sale in data")
-                  ' {{ sale.lokasi }}
+                li(ng-repeat="rotisale in data")
+                  ' {{ rotisale.lokasi.nama }} (Nitip: {{ rotisale.lokasi.penanggung_jawab }})
                   ul
-                    li(ng-repeat="roti in sale.rotis")
-                      ' {{ roti.nama }} {{ roti.jumlah }} buah x &yen;{{ roti.harga }}
+                    li(ng-repeat="roti in rotisale.rotis")
+                      ' {{ roti.nama }} {{ roti.jumlah }} buah &times; &yen;{{ roti.harga }}
         
   .col-md-6
     /!h4 

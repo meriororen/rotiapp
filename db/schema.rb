@@ -11,15 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327110004) do
+ActiveRecord::Schema.define(version: 20150330052212) do
+
+  create_table "lokasis", force: :cascade do |t|
+    t.string "nama"
+    t.string "penanggung_jawab"
+  end
 
   create_table "roti_sales", force: :cascade do |t|
     t.integer "roti_id"
     t.integer "sale_id"
     t.integer "roti_amount"
-    t.string  "lokasi"
+    t.integer "lokasi_id"
   end
 
+  add_index "roti_sales", ["lokasi_id"], name: "index_roti_sales_on_lokasi_id"
   add_index "roti_sales", ["roti_id"], name: "index_roti_sales_on_roti_id"
   add_index "roti_sales", ["sale_id"], name: "index_roti_sales_on_sale_id"
 

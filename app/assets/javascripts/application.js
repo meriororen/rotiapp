@@ -20,5 +20,6 @@
 //= require ../libs/underscore.string/dist/underscore.string.min
 //= require ../libs/bootstrap/js/transition
 //= require ../libs/bootstrap/js/collapse
+//= require ../libs/bootstrap/js/modal
 //= require rotiApp
 //= require_tree .

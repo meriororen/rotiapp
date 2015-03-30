@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 		resources :rotis, only: [:index, :create, :update, :destroy] 
     resources :roti_sales, only: [:index, :create, :update, :destroy]
     resources :sales, only: [:index, :create, :update, :destroy]
+    resources :lokasis, only: [:index, :create, :update, :destroy]
 	end
 
   # You can have the root of your site routed with "root"
