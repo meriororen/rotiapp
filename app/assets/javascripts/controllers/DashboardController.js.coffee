@@ -8,7 +8,7 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
     @saleService.all(assignSales)
     @lokasiService.all(assignLokasis)
     @rotiService.all(assignRotis)
-    $scope.newRotiSale = {} 
+    $scope.newRotiSale = {}
     $scope.rotis = []
 
   $scope.status = false
@@ -52,19 +52,25 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
 #
 angular.module('rotiApp').controller 'AddRotiSaleModalInstanceCtrl', ($scope, $modalInstance, lokasis, rotis) ->
   $scope.newRotiSale = {}
+  $scope.newRoti = {}
+  $scope.curLokasi = {}
   $scope.lokasis = lokasis
   $scope.rotis = rotis
   $scope.newRotiSale.lokasi = $scope.lokasis[0]
-  $scope.newRotiSale.rotis = $scope.rotis[0]
+  $scope.newRoti.nama = $scope.rotis[0]
+  $scope.newRotiSale.rotis = []
 
   getTodayDate = ->
     today = new Date()
-    $scope.newRotiSale.tanggal = today.toDateString()
+    today_date = ("0" + today.getDate()).slice(-2)
+    today_month = ("0" + (today.getMonth() + 1)).slice(-2)
+    today_year = today.getFullYear()
+    $scope.newRotiSale.tanggal = today_date + "." + today_month + "." + today_year
 
   getTodayDate()
 
   $scope.submit = (newRotiSale)->
-    console.log(newRotiSale)
+    $scope.newRotiSale.rotis.push($scope.newRoti)
     $modalInstance.close(newRotiSale)
 
   $scope.cancel = ->
