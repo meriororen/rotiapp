@@ -8,5 +8,5 @@ angular.module('rotiApp').factory 'Lokasi', ($resource, $http) ->
       defaults.patch = defaults.patch || {}
       defaults.patch['Content-Type'] = 'application/json'
 
-    all: (successHandler) ->
-      @lokasiServ.query ((lokasi)-> successHandler(lokasi)), @errorHandler
+    all: ->
+      @lokasiServ.query (-> null), @errorHandler

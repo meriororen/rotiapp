@@ -11,12 +11,12 @@ angular.module('rotiApp').factory 'Roti', ($resource, $http) ->
       defaults.patch['Content-Type'] = 'application/json'
 
     create: (attrs, successHandler) ->
-      new @rotisServ(attrs).$save ((roti) -> 
+      new @rotisServ(attrs).$save ((roti) ->
         successHandler(roti)
       ), @errorHandler
 
     delete: (roti) ->
       new @rotiServ().$delete {id: roti.id},(-> null), @errorHandler
 
-    all: (successHandler) ->
-      @rotisServ.query ((rotis) -> successHandler(rotis)), @errorHandler
+    all: ->
+      @rotisServ.query (-> null), @errorHandler

@@ -7,5 +7,5 @@ angular.module('rotiApp').factory 'Sale', ($resource, $http) ->
       defaults.patch = defaults.patch || {}
       defaults.patch['Content-Type'] = 'application/json'
 
-    all: (successHandler) ->
-      @saleServ.query ((sales)-> successHandler(sales)), @errorHandler
+    all: ->
+      @saleServ.query (-> null), @errorHandler
