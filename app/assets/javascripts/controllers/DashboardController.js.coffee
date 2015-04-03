@@ -1,13 +1,9 @@
 angular.module('rotiApp').controller "DashboardController", ($scope, $routeParams, $modal, RotiSale, Roti, Lokasi, Sale) ->
   $scope.init = ->
-    $scope.newRotiSale = {}
-    $scope.lokasis = []
-    @rotiSaleService = new RotiSale(serverErrorHandler)
+    $scope.getRotiSales()
     @saleService = new Sale(serverErrorHandler)
     @lokasiService = new Lokasi(serverErrorHandler)
-
-    @rotiSaleService.all().$promise.then (rotisales) ->
-      $scope.rotisales = rotisales[0]
+    $scope.lokasis = []
     @saleService.all().$promise.then (sales) ->
       $scope.sales = sales
     @lokasiService.all().$promise.then (lokasis) ->
@@ -17,7 +13,7 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
       rotiService.all().$promise.then (rotis) ->
         angular.forEach rotis, (roti) ->
           $scope.lokasis.map (lokasi) ->
-            lokasi.rotis.push({ nama: roti.nama, jumlah: 0 })
+            lokasi.rotis.push({ id: roti.id, nama: roti.nama, jumlah: 0 })
 
   $scope.status = false
 
@@ -31,18 +27,20 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
       }
     })
 
-    modalInstance.result.then saveNewRotiSale, (-> null)
-
-  saveNewRotiSale = (newRotiSale) ->
-    $scope.newRotiSale = newRotiSale
+    modalInstance.result.then $scope.getRotiSales
 
   serverErrorHandler = ->
     alert("Servernya error, coba lagi")
 
+  $scope.getRotiSales = ->
+    rotiSaleService = new RotiSale(serverErrorHandler)
+    rotiSaleService.all().$promise.then (rotisales) ->
+      $scope.rotisales = rotisales[0]
+
 # controller for modal in this page
 #
-angular.module('rotiApp').controller 'AddRotiSaleModalInstanceCtrl', ($scope, $modalInstance, lokasis) ->
-  $scope.newSale = { lokasis: lokasis }
+angular.module('rotiApp').controller "AddRotiSaleModalInstanceCtrl", ($scope, $modalInstance, lokasis, RotiSale) ->
+  $scope.newSale = { tanggal: null, sales: lokasis }
 
   getTodayDate = ->
     today = new Date()
@@ -53,11 +51,16 @@ angular.module('rotiApp').controller 'AddRotiSaleModalInstanceCtrl', ($scope, $m
 
   getTodayDate()
 
-  $scope.submit = (newRotiSale)->
-    $modalInstance.close(newRotiSale)
+  $scope.submit = (newSale)->
+    service = new RotiSale(serverError)
+    service.create(newSale, ( (ns) -> alert("success") ))
+    $modalInstance.close(newSale)
 
   $scope.increment = (roti) ->
     roti.jumlah++
+
+  $scope.clear = (roti) ->
+    roti.jumlah = 0
 
   $scope.decrement = (roti) ->
     if (roti.jumlah > 0)
@@ -79,4 +82,12 @@ angular.module('rotiApp').controller 'AddRotiSaleModalInstanceCtrl', ($scope, $m
     startingDay: 1
   }
 
+  serverError = ->
+    alert("Servernya lagi error. Coba lagi!")
 
+  cleanse = (newSale) ->
+    newSale.lokasis.forEach (lokasi, li) ->
+      lokasi.rotis.forEach (roti, ri) ->
+        newSale.lokasis[li].rotis.splice(ri, 1) if roti.jumlah == 0
+      newSale.lokasis.unshift(li, 1) if lokasi.rotis.length == 0
+    newSale

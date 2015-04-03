@@ -6,7 +6,31 @@ class Api::RotiSalesController < ApplicationController
     render json: [@rotisales].to_json, response: 201
   end
 
+  def create
+    clean_params
+    newsale = Sale.where(tanggal: date).first || Sale.create!(tanggal: date)
+    params[:sales].each do |s|
+      s[:rotis].each do |r|
+        RotiSale.create!(sale_id: newsale.id, roti_id: r[:id], roti_amount: r[:jumlah], lokasi_id: s[:lokasi][:id])
+      end
+    end
+    render nothing: true, response: 201
+  end
+
+  def date
+    DateTime.parse(params[:tanggal])
+  end
+
   private
+
+  def clean_params
+    params[:sales].each do |s|
+      s[:rotis].each do |r|
+        s[:rotis] -= [r] if r[:jumlah] == 0
+      end
+      params[:sales] -= [s] if s[:rotis].size == 0
+    end
+  end
 
   def rotisales
     @rotisales = Hash.new

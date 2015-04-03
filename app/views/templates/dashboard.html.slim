@@ -17,29 +17,30 @@
           div.form-group
             label.control-label(for="tanggal") Tanggal:
             p.input-group
-              input.form-control(type="text" datepicker-popup="dd.MM.yyyy" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-model="newSale.tanggal")
+              input.form-control(type="text" datepicker-popup="dd.MM.yyyy" is-open="opened" ng-model="newSale.tanggal")
               span.input-group-btn
                 button.btn.btn-default(type="button" ng-click="openDatePicker($event)")
                   i.glyphicon.glyphicon-calendar
           tabset
-            tab(ng-repeat="lokasi in newSale.lokasis" heading="{{ lokasi.lokasi.nama }}")
-              /! -- { #tgl: [{#lok}, {#lok}] }, #lok: { "lokasi": {obj.lok}, "rotis": {obj.rotis} }
-              div.tab-content(style="margin: 10px 0px 10px 0px;")
+            tab(ng-repeat="sale in newSale.sales" heading="{{ sale.lokasi.nama }}")
+              div.tab-content.row(style="margin: 10px 0px 10px 0px;")
                 div.tab-pane.active
-                  div.row
-                    div.col-sm-6
-                      p.input-group.input-group-sm(ng-repeat="roti in newSale.lokasis[$index].rotis")
-                        span.input-group-addon(style="font-weight: bold;")
+                  ul.list-inline
+                    li.col-sm-6(ng-repeat="roti in newSale.sales[$index].rotis")
+                      p.input-group.input-group-sm
+                        span.input-group-addon(style="font-weight: bold; color: #000;")
                           ' {{ roti.jumlah }} 
-                        input.form-control(type="text" ng-model="roti.nama")
+                        input.form-control(type="text" ng-model="roti.nama" readonly)
                         span.input-group-btn
-                          button.btn.btn-success(type="button" ng-click="increment(roti)")
+                          button.btn(type="button" ng-click="increment(roti)")
                             i.glyphicon.glyphicon-plus
-                          button.btn.btn-danger(type="button" ng-click="decrement(roti)")
+                          button.btn(type="button" ng-click="decrement(roti)")
                             i.glyphicon.glyphicon-minus
-        div.modal-footer
-          button.btn.btn-default(type="button" ng-click="cancel()") Tutup
-          button.btn.btn-primary(type="submit" ng-click="submit(newRotiSale)") Tambahkan
+                          button.btn(type="button" ng-click="clear(roti)")
+                            i.glyphicon.glyphicon-refresh
+      div.modal-footer
+        button.btn.btn-default(type="button" ng-click="cancel()") Tutup
+        button.btn.btn-primary(type="submit" ng-click="submit(newSale)") Tambahkan
     /! ---- add sale modal template finish
     hr
       accordion(close-others="true")
