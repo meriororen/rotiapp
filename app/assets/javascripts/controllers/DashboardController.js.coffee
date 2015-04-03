@@ -49,11 +49,17 @@ angular.module('rotiApp').controller "AddRotiSaleModalInstanceCtrl", ($scope, $m
     today_year = today.getFullYear()
     $scope.newSale.tanggal = today_date + "." + today_month + "." + today_year
 
+  $scope.selectedTab = 0
+  $scope.select = (index) ->
+    $scope.selectedTab = index
+  $scope.isSelected = (index) ->
+    $scope.selectedTab == index
+
   getTodayDate()
 
   $scope.submit = (newSale)->
     service = new RotiSale(serverError)
-    service.create(newSale, ( (ns) -> alert("success") ))
+    service.create(newSale, ( (ns) -> null ))
     $modalInstance.close(newSale)
 
   $scope.increment = (roti) ->

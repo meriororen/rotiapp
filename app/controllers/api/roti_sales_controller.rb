@@ -8,11 +8,14 @@ class Api::RotiSalesController < ApplicationController
 
   def create
     clean_params
-    newsale = Sale.where(tanggal: date).first || Sale.create!(tanggal: date)
-    params[:sales].each do |s|
-      s[:rotis].each do |r|
-        RotiSale.create!(sale_id: newsale.id, roti_id: r[:id], roti_amount: r[:jumlah], lokasi_id: s[:lokasi][:id])
+    if params[:sales].size > 0 
+      newsale = Sale.where(tanggal: date).first || Sale.create!(tanggal: date)
+      params[:sales].each do |s|
+        s[:rotis].each do |r|
+          RotiSale.create!(sale_id: newsale.id, roti_id: r[:id], roti_amount: r[:jumlah], lokasi_id: s[:lokasi][:id])
+        end
       end
+    else
     end
     render nothing: true, response: 201
   end
