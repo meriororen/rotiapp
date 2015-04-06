@@ -11,6 +11,12 @@ div.modal-body(ng-init="init()")
         span.input-group-btn
           button.btn.btn-default(type="button" ng-click="openDatePicker($event)")
             i.glyphicon.glyphicon-calendar
+    div.form-group
+      label.control-label(for="total_diterima") Total Diterima:
+      p.input-group
+        span.input-group-addon
+          ' &yen;
+        input.form-control(type="text" ng-model="newSale.total")
       hr
       div.panel.with-nav-tabs.panel-info
         div.panel-heading
@@ -39,13 +45,15 @@ div.modal-body(ng-init="init()")
                       button.btn.btn-info(type="button" ng-click="change(roti, 2)")
                         i.glyphicon.glyphicon-refresh
                 li.col-sm-6
-                  a.btn.btn-info(href="/rotis" ng-click="cancel()")
+                  a(href="/rotis" ng-click="cancel()")
                     ' Tambahkan Roti..
   div.row(style="margin: 0px 0px 0px 0px")
-    div.col-md-4.pull-right#newRotiSaleStat(style="text-align: center;")
+    div.col-md-12.pull-right#newRotiSaleStat(style="text-align: center;")
       h3
         label 
-          ' &yen; {{ total }}
+          ' &yen; {{ newSale.total }} - &yen; {{ calculated_total }}
+          span(ng-class="{(newSale.total - calculated_total) < 0 ? 'danger' : 'success'}")
+            ' = &yen; {{ newSale.total - calculated_total }}
 div.modal-footer
   button.btn.btn-default(type="button" ng-click="cancel()") Tutup
   button.btn.btn-primary(type="submit" ng-click="submit(newSale)") Tambahkan

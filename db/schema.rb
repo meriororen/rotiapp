@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330052212) do
+ActiveRecord::Schema.define(version: 20150406093035) do
 
   create_table "lokasis", force: :cascade do |t|
     t.string "nama"
@@ -36,6 +36,9 @@ ActiveRecord::Schema.define(version: 20150330052212) do
 
   create_table "sales", force: :cascade do |t|
     t.datetime "tanggal"
+    t.integer  "total"
+    t.integer  "kelebihan"
+    t.integer  "kekurangan"
   end
 
 end

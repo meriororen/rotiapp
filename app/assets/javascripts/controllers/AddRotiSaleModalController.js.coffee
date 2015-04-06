@@ -1,7 +1,7 @@
 angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $modalInstance, newRotiSale, RotiSale) ->
 
   $scope.init = ->
-    $scope.newSale = { sales: newRotiSale, total: 0 }
+    $scope.newSale = { sales: newRotiSale, total: 0, kelebihan: 0, kekurangan: 0 }
     $scope.recalculate()
     $scope.getTodayDate()
 
@@ -31,10 +31,10 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
     $scope.recalculate()
 
   $scope.recalculate = ->
-    $scope.total = 0
+    $scope.calculated_total = 0
     $scope.newSale.sales.forEach (lokasi) ->
       lokasi.rotis.forEach (roti) ->
-        $scope.total += roti.jumlah * roti.harga
+        $scope.calculated_total += roti.jumlah * roti.harga
 
   $scope.cancel = ->
     $modalInstance.dismiss('cancel')
