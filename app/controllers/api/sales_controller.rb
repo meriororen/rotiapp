@@ -6,10 +6,14 @@ class Api::SalesController < ApplicationController
     render json: sales, response: 201
   end
 
+  def create
+    Sale.create!(s_params)
+  end
+
   private
 
-  def rs_params
-    params.require(:sale).permit(:lokasi, :tanggal)
+  def s_params
+    params.require(:sale).permit(:tanggal, :kelebihan, :kekurangan, :total)
   end
 
   def sales

@@ -1,6 +1,6 @@
 angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $modalInstance, newRotiSale, sales, $filter, RotiSale) ->
   $scope.init = ->
-    $scope.newSale = { sales: newRotiSale, total: 0, kelebihan: 0, kekurangan: 0 }
+    $scope.newSale = { rotisales: newRotiSale, sale: { total: 0, kelebihan: 0, kekurangan: 0 }}
     $scope.recalculate()
     $scope.getTodayDate()
     $scope.sales = sales
@@ -18,24 +18,27 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
   $scope.exists = ->
     $scope.existed = false
     $scope.sales.forEach (sale) ->
-      if (to_proper_date(sale.tanggal) == to_proper_date($scope.newSale.tanggal))
+      if (to_proper_date(sale.tanggal) == to_proper_date($scope.newSale.sale.tanggal))
         $scope.existed = true
 
-  $scope.$watch 'newSale.tanggal', ((newVal, oldVal) ->
+  $scope.$watch 'newSale.sale.tanggal', ((newVal, oldVal) ->
     $scope.exists() if (newVal != oldVal)
   )
-
-  $scope.$watch 'existed', (existed) ->
-    console.log(existed)
 
   $scope.lebihkurang = 'hidden'
 
   $scope.$watch 'margin', ((margin) ->
     if margin < 0
       $scope.lebihkurang = 'label-danger'
+      $scope.newSale.kelebihan = 0
+      $scope.newSale.kekurangan = margin
     else if margin > 0
-      $scope.lebihkurang = 'label-success'
+      $scope.lebihkurang = 'label-info'
+      $scope.newSale.kekurangan = 0
+      $scope.newSale.kelebihan = margin
     else
+      $scope.newSale.kelebihan = 0
+      $scope.newSale.kekurangan = 0
       $scope.lebihkurang = 'hidden'
   )
 
@@ -45,7 +48,7 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
     today_date = ("0" + today.getDate()).slice(-2)
     today_month = month[today.getMonth()]
     today_year = today.getFullYear()
-    $scope.newSale.tanggal = today_month + " " + today_date + ", " + today_year
+    $scope.newSale.sale.tanggal = today_month + " " + today_date + ", " + today_year
 
   $scope.submit = (newSale)->
     service = new RotiSale(serverError)
@@ -61,7 +64,7 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
 
   $scope.recalculate = ->
     $scope.calculated_total = 0
-    $scope.newSale.sales.forEach (lokasi) ->
+    $scope.newSale.rotisales.forEach (lokasi) ->
       lokasi.rotis.forEach (roti) ->
         $scope.calculated_total += roti.jumlah * roti.harga
 

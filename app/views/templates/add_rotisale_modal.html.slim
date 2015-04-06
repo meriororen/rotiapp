@@ -6,7 +6,7 @@ div.modal-body(ng-init="init()")
   form
     div.form-group.has-feedback(ng-class="{ 'has-error':existed, 'has-success':!existed }")
       label.control-label(for="tanggal") Tanggal:
-      input.form-control(type="text" is-open="opened" ng-focus="openDatePicker($event)" ng-model="newSale.tanggal" datepicker-popup="MMM dd, yyyy")
+      input.form-control(type="text" is-open="opened" ng-focus="openDatePicker($event)" ng-model="newSale.sale.tanggal" datepicker-popup="MMM dd, yyyy")
       span.glyphicon.glyphicon-remove.form-control-feedback( ng-class="{ 'hidden':!existed }")
       span.glyphicon.glyphicon-ok.form-control-feedback( ng-class="{ 'hidden':existed }")
     div.form-group
@@ -14,12 +14,12 @@ div.modal-body(ng-init="init()")
       p.input-group
         span.input-group-addon
           ' &yen;
-        input.form-control(type="text" ng-model="newSale.total")
+        input.form-control(type="text" ng-model="newSale.sale.total")
       hr
       div.panel.with-nav-tabs.panel-info
         div.panel-heading
           ul.nav.nav-tabs
-            li(ng-repeat="sale in newSale.sales" ng-class="isSelected($index) ? 'active' : ''")
+            li(ng-repeat="sale in newSale.rotisales" ng-class="isSelected($index) ? 'active' : ''")
               a(href="" ng-click="select($index)")
                 ' {{ sale.lokasi.nama }}
             li
@@ -30,7 +30,7 @@ div.modal-body(ng-init="init()")
           div.tab-content
             div.tab-pane.active
               ul.list-inline
-                li.col-sm-6(ng-repeat="roti in newSale.sales[selectedTab].rotis")
+                li.col-sm-6(ng-repeat="roti in newSale.rotisales[selectedTab].rotis")
                   p.input-group.input-group-sm
                     span.input-group-addon.info(style="font-weight: bold;")
                       ' {{ roti.jumlah }} 
@@ -51,7 +51,7 @@ div.modal-body(ng-init="init()")
         label
           ' &yen; {{ calculated_total }}
           span.label(ng-class="lebihkurang")
-            ' &yen; {{ margin > 0 ? '+' : '' }} {{ margin = newSale.total - calculated_total }}
+            ' &yen; {{ margin > 0 ? '+' : '' }} {{ margin = newSale.sale.total - calculated_total }}
 div.modal-footer
   button.btn.btn-default(type="button" ng-click="cancel()") Tutup
   button.btn.btn-primary(type="submit" ng-click="submit(newSale)" ng-class="{ 'disabled':existed }") Tambahkan
