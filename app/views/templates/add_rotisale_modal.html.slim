@@ -4,13 +4,11 @@ div.modal-header
   h4.modal-title Tambahkan Penjualan
 div.modal-body(ng-init="init()")
   form
-    div.form-group
+    div.form-group.has-feedback(ng-class="{ 'has-error':existed, 'has-success':!existed }")
       label.control-label(for="tanggal") Tanggal:
-      p.input-group
-        input.form-control(type="text" is-open="opened" ng-model="newSale.tanggal" datepicker-popup="dd.MM.yyyy")
-        span.input-group-btn
-          button.btn.btn-default(type="button" ng-click="openDatePicker($event)")
-            i.glyphicon.glyphicon-calendar
+      input.form-control(type="text" is-open="opened" ng-focus="openDatePicker($event)" ng-model="newSale.tanggal" datepicker-popup="MMM dd, yyyy")
+      span.glyphicon.glyphicon-remove.form-control-feedback( ng-class="{ 'hidden':!existed }")
+      span.glyphicon.glyphicon-ok.form-control-feedback( ng-class="{ 'hidden':existed }")
     div.form-group
       label.control-label(for="total_diterima") Total Diterima:
       p.input-group
@@ -50,11 +48,11 @@ div.modal-body(ng-init="init()")
   div.row(style="margin: 0px 0px 0px 0px")
     div.col-md-12.pull-right#newRotiSaleStat(style="text-align: center;")
       h3
-        label 
-          ' &yen; {{ newSale.total }} - &yen; {{ calculated_total }}
-          span(ng-class="{(newSale.total - calculated_total) < 0 ? 'danger' : 'success'}")
-            ' = &yen; {{ newSale.total - calculated_total }}
+        label
+          ' &yen; {{ calculated_total }}
+          span.label(ng-class="lebihkurang")
+            ' &yen; {{ margin > 0 ? '+' : '' }} {{ margin = newSale.total - calculated_total }}
 div.modal-footer
   button.btn.btn-default(type="button" ng-click="cancel()") Tutup
-  button.btn.btn-primary(type="submit" ng-click="submit(newSale)") Tambahkan
+  button.btn.btn-primary(type="submit" ng-click="submit(newSale)" ng-class="{ 'disabled':existed }") Tambahkan
 /! ---- add sale modal template finish

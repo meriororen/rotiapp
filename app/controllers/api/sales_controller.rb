@@ -12,10 +12,8 @@ class Api::SalesController < ApplicationController
     params.require(:sale).permit(:lokasi, :tanggal)
   end
 
-  private
-
   def sales
-    @sales ||= Sale.all.order(:tanggal)
+    @sales ||= Sale.order(:tanggal => :desc)
   end
     
 end

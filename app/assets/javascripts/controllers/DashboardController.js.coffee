@@ -9,7 +9,6 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
     @lokasiService.all().$promise.then (lokasis) ->
       angular.forEach lokasis, (lokasi) ->
         $scope.newRotiSale.push { lokasi: lokasi, rotis: [] }
-
       rotiService = new Roti(serverErrorHandler)
       rotiService.all().$promise.then (rotis) ->
         angular.forEach rotis, (roti) ->
@@ -25,6 +24,8 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
       resolve: {
         newRotiSale: ->
           $scope.newRotiSale
+        sales: ->
+          $scope.sales
       }
     })
 
