@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   get '/dashboard' => 'templates#index'
   get '/rotis' => 'templates#index'
-  get '/rotis/:id' => 'templates#index'
+  get '/lokasis' => 'templates#index'
   get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/ }
 
   # Example of regular route:
