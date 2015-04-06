@@ -6,49 +6,6 @@
         small
           a(href="#" ng-click="open()")
             i.fa.fa-plus-square
-    /! -------  add sale modal template
-    script(type="text/ng-template" id="AddRotiSaleTemplate.html")
-      div.modal-header
-        button.close(type="button" ng-click="cancel()")
-          span &times;
-        h4.modal-title Tambahkan Penjualan
-      div.modal-body
-        form
-          div.form-group
-            label.control-label(for="tanggal") Tanggal:
-            p.input-group
-              input.form-control(type="text" datepicker-popup="dd.MM.yyyy" is-open="opened" ng-model="newSale.tanggal")
-              span.input-group-btn
-                button.btn.btn-default(type="button" ng-click="openDatePicker($event)")
-                  i.glyphicon.glyphicon-calendar
-            hr
-            div.panel.with-nav-tabs.panel-success
-              div.panel-heading
-                ul.nav.nav-tabs
-                  li(ng-repeat="sale in newSale.sales" ng-class="isSelected($index) ? 'active' : ''")
-                    a(href="" data-toggle="tab" data-target="#tab{{$index}}" ng-click="select($index)")
-                      ' {{ sale.lokasi.nama }}
-              div.panel-body
-                div.tab-content
-                  div.tab-pane.active
-                    ul.list-inline
-                      li.col-sm-6(ng-repeat="roti in newSale.sales[selectedTab].rotis" id="tab{{$index}}")
-                        p.input-group.input-group-sm
-                          span.input-group-addon(style="font-weight: bold; color: #000;")
-                            ' {{ roti.jumlah }} 
-                          input.form-control(type="text" ng-model="roti.nama" readonly)
-                          span.input-group-btn
-                            button.btn(type="button" ng-click="increment(roti)")
-                              i.glyphicon.glyphicon-plus
-                            button.btn(type="button" ng-click="decrement(roti)")
-                              i.glyphicon.glyphicon-minus
-                            button.btn(type="button" ng-click="clear(roti)")
-                              i.glyphicon.glyphicon-refresh
-      div.modal-footer
-        ' {{ total }}
-        button.btn.btn-default(type="button" ng-click="cancel()") Tutup
-        button.btn.btn-primary(type="submit" ng-click="submit(newSale)") Tambahkan
-    /! ---- add sale modal template finish
     hr
       accordion(close-others="true")
         accordion-group(ng-repeat="(tgl, data) in rotisales" is-open="accst.open")

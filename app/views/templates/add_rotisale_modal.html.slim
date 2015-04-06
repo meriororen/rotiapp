@@ -1,0 +1,52 @@
+div.modal-header
+  button.close(type="button" ng-click="cancel()")
+    span &times;
+  h4.modal-title Tambahkan Penjualan
+div.modal-body(ng-init="init()")
+  form
+    div.form-group
+      label.control-label(for="tanggal") Tanggal:
+      p.input-group
+        input.form-control(type="text" is-open="opened" ng-model="newSale.tanggal" datepicker-popup="dd.MM.yyyy")
+        span.input-group-btn
+          button.btn.btn-default(type="button" ng-click="openDatePicker($event)")
+            i.glyphicon.glyphicon-calendar
+      hr
+      div.panel.with-nav-tabs.panel-info
+        div.panel-heading
+          ul.nav.nav-tabs
+            li(ng-repeat="sale in newSale.sales" ng-class="isSelected($index) ? 'active' : ''")
+              a(href="" ng-click="select($index)")
+                ' {{ sale.lokasi.nama }}
+            li
+              a(href="/lokasis" ng-click="cancel()")
+                span
+                  i.glyphicon.glyphicon-plus
+        div.panel-body
+          div.tab-content
+            div.tab-pane.active
+              ul.list-inline
+                li.col-sm-6(ng-repeat="roti in newSale.sales[selectedTab].rotis")
+                  p.input-group.input-group-sm
+                    span.input-group-addon.info(style="font-weight: bold;")
+                      ' {{ roti.jumlah }} 
+                    input.form-control(type="text" ng-model="roti.nama" readonly)
+                    span.input-group-btn
+                      button.btn.btn-info(type="button" ng-click="change(roti, 0)")
+                        i.glyphicon.glyphicon-plus
+                      button.btn.btn-info(type="button" ng-click="change(roti, 1)")
+                        i.glyphicon.glyphicon-minus
+                      button.btn.btn-info(type="button" ng-click="change(roti, 2)")
+                        i.glyphicon.glyphicon-refresh
+                li.col-sm-6
+                  a.btn.btn-info(href="/rotis" ng-click="cancel()")
+                    ' Tambahkan Roti..
+  div.row(style="margin: 0px 0px 0px 0px")
+    div.col-md-4.pull-right#newRotiSaleStat(style="text-align: center;")
+      h3
+        label 
+          ' &yen; {{ total }}
+div.modal-footer
+  button.btn.btn-default(type="button" ng-click="cancel()") Tutup
+  button.btn.btn-primary(type="submit" ng-click="submit(newSale)") Tambahkan
+/! ---- add sale modal template finish

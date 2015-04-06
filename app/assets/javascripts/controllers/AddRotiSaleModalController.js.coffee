@@ -1,7 +1,9 @@
-angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $modalInstance, lokasis, RotiSale) ->
-  $scope.newSale = { tanggal: null, sales: lokasis }
+angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $modalInstance, newRotiSale, RotiSale) ->
 
-  getTodayDate()
+  $scope.init = ->
+    $scope.newSale = { sales: newRotiSale, total: 0 }
+    $scope.recalculate()
+    $scope.getTodayDate()
 
   $scope.selectedTab = 0
   $scope.select = (index) ->
@@ -9,21 +11,31 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
   $scope.isSelected = (index) ->
     $scope.selectedTab == index
 
+  $scope.getTodayDate = ->
+    today = new Date()
+    today_date = ("0" + today.getDate()).slice(-2)
+    today_month = ("0" + (today.getMonth() + 1)).slice(-2)
+    today_year = today.getFullYear()
+    $scope.newSale.tanggal = today_date + "." + today_month + "." + today_year
+
   $scope.submit = (newSale)->
     service = new RotiSale(serverError)
     service.create(newSale, ( (ns) -> null ))
     $modalInstance.close(newSale)
 
-  $scope.increment = (roti) ->
-    roti.jumlah++
+  $scope.change = (roti, type) ->
+    switch type
+      when 0 then roti.jumlah++
+      when 1 then roti.jumlah-- if roti.jumlah > 0
+      when 2 then roti.jumlah = 0
+    $scope.recalculate()
 
-  $scope.clear = (roti) ->
-    roti.jumlah = 0
+  $scope.recalculate = ->
+    $scope.total = 0
+    $scope.newSale.sales.forEach (lokasi) ->
+      lokasi.rotis.forEach (roti) ->
+        $scope.total += roti.jumlah * roti.harga
 
-  $scope.decrement = (roti) ->
-    if (roti.jumlah > 0)
-      roti.jumlah--
- 
   $scope.cancel = ->
     $modalInstance.dismiss('cancel')
 
@@ -38,12 +50,6 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
     startingDay: 1
   }
 
-  getTodayDate = ->
-    today = new Date()
-    today_date = ("0" + today.getDate()).slice(-2)
-    today_month = ("0" + (today.getMonth() + 1)).slice(-2)
-    today_year = today.getFullYear()
-    $scope.newSale.tanggal = today_date + "." + today_month + "." + today_year
 
   serverError = ->
     alert("Servernya lagi error. Coba lagi!")
