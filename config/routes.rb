@@ -10,12 +10,15 @@ Rails.application.routes.draw do
 	end
 
   # You can have the root of your site routed with "root"
-  root 'templates#index'
+  #root 'templates#index'
 
   get '/dashboard' => 'templates#index'
   get '/rotis' => 'templates#index'
   get '/lokasis' => 'templates#index'
   get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/ }
+
+  devise_for :users
+  root :to => 'home#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
