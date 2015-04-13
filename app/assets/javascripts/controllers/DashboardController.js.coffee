@@ -4,8 +4,7 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
     $scope.getRotiSales()
     @saleService = new Sale(serverErrorHandler)
     @lokasiService = new Lokasi(serverErrorHandler)
-    @saleService.all().$promise.then (sales) ->
-      $scope.sales = sales
+    $scope.getSales()
     @lokasiService.all().$promise.then (lokasis) ->
       angular.forEach lokasis, (lokasi) ->
         $scope.newRotiSale.push { lokasi: lokasi, rotis: [] }
@@ -38,3 +37,7 @@ angular.module('rotiApp').controller "DashboardController", ($scope, $routeParam
     rotiSaleService = new RotiSale(serverErrorHandler)
     rotiSaleService.all().$promise.then (rotisales) ->
       $scope.rotisales = rotisales[0]
+
+  $scope.getSales = ->
+    new Sale(serverErrorHandler).all().$promise.then (sales) ->
+      $scope.sales = sales

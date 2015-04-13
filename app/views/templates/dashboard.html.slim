@@ -1,20 +1,33 @@
 .ng-cloak(ng-init="init()")
-  .col-md-6
-    div
-      h4 
-        ' Rangkuman Penjualan 
-        small
-          a(href="#" ng-click="open()")
-            i.fa.fa-plus-square
-    hr
-      accordion(close-others="true")
-        accordion-group(ng-repeat="(tgl, data) in rotisales" is-open="accst.open")
-          accordion-heading 
-            ' Penjualan {{ tgl * 1000 | date:'dd-MMM-yyyy' }}
-            i.pull-right.glyphicon(ng-class="{'glyphicon-chevron-down': accst.open, 'glyphicon-chevron-right': !accst.open}")
-          div
-            li(ng-repeat="rotisale in data")
-              ' {{ rotisale.lokasi.nama }} (Nitip: {{ rotisale.lokasi.penanggung_jawab }})
-              ul
-                li(ng-repeat="roti in rotisale.rotis")
-                  ' {{ roti.nama }} {{ roti.jumlah }} buah &times; &yen;{{ roti.harga }}
+  div
+    h4 
+      ' Rangkuman Penjualan 
+      small
+        a(href="#" ng-click="open()")
+          i.fa.fa-plus-square
+  hr
+  table.table.table-condensed
+    thead
+      tr
+        th
+          ' Tanggal
+        th
+          ' Lokasi
+        th
+          ' Roti
+    tbody
+      tr(ng-repeat="(tanggal, data) in rotisales")
+        td
+          a(href="/sales/")
+            ' {{ tanggal * 1000 | date:'dd-MMM-yyyy' }}
+        td
+          table.table.table-condensed(style="margin: 0px;")
+            tr(ng-repeat="datum in data")
+              td(style="border-top: none !important; padding: 0px;")
+                ' {{ datum.lokasi.nama }}
+        td
+          table.table.table-condensed(style="margin: 0px;")
+            tr(ng-repeat="datum in data")
+              td(style="border-top: none !important; padding: 0px;")
+                span.label.label-success(ng-repeat="roti in datum.rotis" style="margin-right: 5px;")
+                  ' {{ roti.jumlah }} &times; {{ roti.nama }}

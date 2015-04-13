@@ -25,22 +25,14 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
     $scope.exists() if (newVal != oldVal)
   )
 
-  $scope.lebihkurang = 'hidden'
-
-  $scope.$watch 'margin', ((margin) ->
-    if margin < 0
-      $scope.lebihkurang = 'label-danger'
-      $scope.newSale.kelebihan = 0
-      $scope.newSale.kekurangan = margin
-    else if margin > 0
-      $scope.lebihkurang = 'label-info'
-      $scope.newSale.kekurangan = 0
-      $scope.newSale.kelebihan = margin
-    else
-      $scope.newSale.kelebihan = 0
-      $scope.newSale.kekurangan = 0
-      $scope.lebihkurang = 'hidden'
+  $scope.$watch 'newSale.sale.total', ((total) ->
+    $scope.recalculate_margin()
   )
+
+  $scope.recalculate_margin = ->
+    margin = $scope.newSale.sale.total - $scope.calculated_total
+    $scope.newSale.kelebihan = if (margin <= 0) then 0 else margin
+    $scope.newSale.kekurangan = if (margin >= 0) then 0 else margin
 
   $scope.getTodayDate = ->
     month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -67,6 +59,7 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
     $scope.newSale.rotisales.forEach (lokasi) ->
       lokasi.rotis.forEach (roti) ->
         $scope.calculated_total += roti.jumlah * roti.harga
+    $scope.recalculate_margin()
 
   $scope.cancel = ->
     $modalInstance.dismiss('cancel')
@@ -74,7 +67,6 @@ angular.module('rotiApp').controller "AddRotiSaleModalController", ($scope, $mod
   $scope.openDatePicker = ($event) ->
     $event.preventDefault()
     $event.stopPropagation()
-
     $scope.opened = true
 
   $scope.dateOptions = {

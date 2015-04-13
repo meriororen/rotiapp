@@ -5,12 +5,12 @@ div.modal-header
 div.modal-body(ng-init="init()")
   form
     div.form-group.has-feedback(ng-class="{ 'has-error':existed, 'has-success':!existed }")
-      label.control-label(for="tanggal") Tanggal:
+      label.control-label(for="tanggal") Tanggal
       input.form-control(type="text" is-open="opened" ng-focus="openDatePicker($event)" ng-model="newSale.sale.tanggal" datepicker-popup="MMM dd, yyyy")
       span.glyphicon.glyphicon-remove.form-control-feedback( ng-class="{ 'hidden':!existed }")
       span.glyphicon.glyphicon-ok.form-control-feedback( ng-class="{ 'hidden':existed }")
     div.form-group
-      label.control-label(for="total_diterima") Total Diterima:
+      label.control-label(for="total_diterima") Total Diterima
       p.input-group
         span.input-group-addon
           ' &yen;
@@ -43,15 +43,24 @@ div.modal-body(ng-init="init()")
                       button.btn.btn-info(type="button" ng-click="change(roti, 2)")
                         i.glyphicon.glyphicon-refresh
                 li.col-sm-6
-                  a(href="/rotis" ng-click="cancel()")
-                    ' Tambahkan Roti..
-  div.row(style="margin: 0px 0px 0px 0px")
-    div.col-md-12.pull-right#newRotiSaleStat(style="text-align: center;")
-      h3
-        label
-          ' &yen; {{ calculated_total }}
-          span.label(ng-class="lebihkurang")
-            ' &yen; {{ margin > 0 ? '+' : '' }} {{ margin = newSale.sale.total - calculated_total }}
+                  div(style="text-align: center; padding-top: 4px;")
+                    a(href="/rotis" ng-click="cancel()")
+                      ' Tambahkan Roti..
+  hr
+  div(style="display: table; width: 100%; border-collapse: collapse; table-layout: fixed;")
+    ul.text-center(style="display: table-row;")
+      li(style="display: table-cell;")
+        ' Total
+        h2(style="margin: 5px;")
+          ' &yen;{{ calculated_total }}
+      li(style="display: table-cell;")
+        ' Kelebihan
+        h2(style="margin: 5px;")
+          ' &yen;{{ newSale.kelebihan }}
+      li(style="display: table-cell;")
+        ' Kekurangan
+        h2(style="margin: 5px;")
+          ' &yen;{{ newSale.kekurangan }}
 div.modal-footer
   button.btn.btn-default(type="button" ng-click="cancel()") Tutup
   button.btn.btn-primary(type="submit" ng-click="submit(newSale)" ng-class="{ 'disabled':existed }") Tambahkan
