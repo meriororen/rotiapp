@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+  devise_for :users
+  root :to => 'home#index'
 	
 	namespace :api, defaults: {format: :json} do
+#    devise_scope :user do
+#      resource :session, only: [:create, :destroy]
+#    end
 		resources :rotis, only: [:index, :create, :update, :destroy] 
     resources :roti_sales, only: [:index, :create, :update, :destroy]
     resources :sales, only: [:index, :create, :update, :destroy]
@@ -17,8 +22,6 @@ Rails.application.routes.draw do
   get '/lokasis' => 'templates#index'
   get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/ }
 
-  devise_for :users
-  root :to => 'home#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

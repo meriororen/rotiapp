@@ -1,5 +1,5 @@
 class Api::RotisController < ApplicationController
-  skip_before_filter :verify_authenticity_token
+  before_filter :authenticate_user!
 
 	def index
     render json: rotis, status: 201 

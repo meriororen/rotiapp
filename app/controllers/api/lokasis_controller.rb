@@ -1,5 +1,4 @@
 class Api::LokasisController < ApplicationController
-  skip_before_filter :verify_authenticity_token
 
   def index
     render json: Lokasi.all, response: 201

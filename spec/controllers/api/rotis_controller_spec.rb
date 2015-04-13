@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'spec_helper'
 
 describe Api::RotisController, type: :controller do
 	it "should be able to create a new record" do
