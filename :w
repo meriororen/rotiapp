@@ -1,14 +1,14 @@
 class Api::SessionsController < Devise::SessionsController
-  before_filter :warden_authenticate
+  before_action :warden_authenticate
 
   def create
     sign_in(resource_name, resource)
-    render json: { success: true }
+    render json: {}
   end
 
   def destroy
     sign_out(resource_name)
-    render json: { success: true }
+    render nothing: true
   end
 
   private
