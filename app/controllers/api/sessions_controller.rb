@@ -3,12 +3,18 @@ class Api::SessionsController < Devise::SessionsController
 
   def create
     sign_in(resource_name, resource)
-    render json: { success: true }
+    current_user.clear_authentication_token!
+    render json: { user: current_user, status: :ok, auth_token: current_user.authentication_token }
   end
 
   def destroy
-    sign_out(resource_name)
-    render json: { success: true }
+    if current_user
+      current_user.clear_authentication_token!
+      sign_out(resource_name)
+      render json: {}.to_json, status: :ok
+    else
+      render json: {}.to_json, status: :unprocessable_entity
+    end
   end
 
   private

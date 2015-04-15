@@ -11,7 +11,7 @@ describe 'API auth' do
     it "should return auth_token for valid HTTP Basic credentials" do
       authenticate_successfully
       expect(response.status).to eq(200)
-      # TODO: expect something in return?
+      expect(json_response["auth_token"]).to_not be_blank
     end
 
     it "should return error json when HTTP Basic credentials are invalid" do
@@ -30,10 +30,9 @@ describe 'API auth' do
   describe "DELETE /api/session", type: :request do
     it "should return HTTP 200 OK when session exists" do
       authenticate_successfully
-      # TODO: this should be some auth token or something
-      delete '/api/session', {}, http_basic(@user.email, "hogehoge8")
+      auth_token = json_response["auth_token"]
+      delete '/api/session', user_token: auth_token
       expect(response).to be_ok
-      expect(response.body).to be_blank
     end
 
     it "should return HTTP 401 Unauthorized when session didn't exist" do
