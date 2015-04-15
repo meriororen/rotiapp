@@ -31,7 +31,7 @@ describe 'API auth' do
     it "should return HTTP 200 OK when session exists" do
       authenticate_successfully
       auth_token = json_response["auth_token"]
-      delete '/api/session', user_token: auth_token
+      delete '/api/session', { 'user_token' => auth_token, 'user_email' => @user.email }
       expect(response).to be_ok
     end
 

@@ -1,4 +1,6 @@
 class Api::SessionsController < Devise::SessionsController
+  skip_before_filter :verify_signed_out_user, only: [ :destroy ]
+  skip_before_filter :verify_authenticity_token
   before_filter :warden_authenticate
 
   def create
@@ -10,10 +12,10 @@ class Api::SessionsController < Devise::SessionsController
   def destroy
     if current_user
       current_user.clear_authentication_token!
-      sign_out(resource_name)
-      render json: {}.to_json, status: :ok
+      signed_out = Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+      render json: {}, status: :ok
     else
-      render json: {}.to_json, status: :unprocessable_entity
+      render json: {}, status: :unprocessable_entity
     end
   end
 
