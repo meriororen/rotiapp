@@ -1,5 +1,4 @@
 class Api::LokasisController < ApplicationController
-
   def index
     render json: Lokasi.all, response: 201
   end
@@ -24,5 +23,4 @@ class Api::LokasisController < ApplicationController
   def lokasi_params
     params.require(:lokasi).permit(:nama, :penanggung_jawab)
   end
-
 end

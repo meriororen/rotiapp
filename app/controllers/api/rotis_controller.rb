@@ -1,6 +1,4 @@
 class Api::RotisController < ApplicationController
-  before_filter :authenticate_user!
-
 	def index
     render json: rotis, status: 201 
 	end

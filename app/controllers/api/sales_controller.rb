@@ -1,4 +1,4 @@
-class Api::SalesController < ApplicationController
+class Api::SalesController < Api::BaseController
   before_filter :authenticate_user!
   before_filter :sales
 

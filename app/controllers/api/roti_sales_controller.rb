@@ -1,5 +1,4 @@
-class Api::RotiSalesController < ApplicationController
-  before_filter :authenticate_user!
+class Api::RotiSalesController < Api::BaseController 
   before_filter :rotisales
 
   def index

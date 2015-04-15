@@ -3,6 +3,8 @@ nav.navbar.navbar-default
     div.navbar-header
       a.navbar-brand(href="/") KizunaBread
     div.collapse.navbar-collapse
+      /!= link_to "Logout", destroy_user_session_path, :method => :delete
+      /!= link_to "LogoutAPI", api_session_path, :method => :delete
       - if current_user.nil?
         = form_tag session_path(:user), class:'navbar-form navbar-right', role: 'signin' do
           div.form-group

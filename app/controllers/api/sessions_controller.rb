@@ -6,16 +6,25 @@ class Api::SessionsController < Devise::SessionsController
   def create
     sign_in(resource_name, resource)
     current_user.clear_authentication_token!
-    render json: { user: current_user, status: :ok, auth_token: current_user.authentication_token }
+    respond_to do |format|
+      format.json { render json: { auth_token: current_user.authentication_token } }
+      format.html { redirect_to dashboard_path }
+    end
   end
 
   def destroy
     if current_user
       current_user.clear_authentication_token!
       signed_out = Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      render json: {}, status: :ok
+      respond_to do |format|
+        format.json { render json: { status: :ok }.to_json, status: :ok }
+        format.html { redirect_to root_path, flash: { :notice => "Successfully signed out." } }
+      end
     else
-      render json: {}, status: :unprocessable_entity
+      respond_to do |format|
+        format.json { render json: {}, status: :unprocessable_entity }
+        format.html { redirect_to root_path, flash: { :error => "You are not signed in." } }
+      end
     end
   end
 
