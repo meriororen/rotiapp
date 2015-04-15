@@ -1,7 +1,7 @@
 nav.navbar.navbar-default
   div.container-fluid
     div.navbar-header
-      a.navbar-brand(href="#") KizunaBread
+      a.navbar-brand(href="/") KizunaBread
     div.collapse.navbar-collapse
       - if current_user.nil?
         = form_tag session_path(:user), class:'navbar-form navbar-right', role: 'signin' do
@@ -20,6 +20,3 @@ nav.navbar.navbar-default
                 = link_to "Dashboard", dashboard_path
               li
                 = link_to "Keluar", destroy_user_session_path, :method => :delete
-
-
-

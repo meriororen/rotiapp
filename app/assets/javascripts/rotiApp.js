@@ -8,4 +8,4 @@ rotiApp.config(function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode({enabled:true, requireBase: false});
 });
 
-_.mixin(s.exports())
+_.mixin(s.exports());

@@ -14,8 +14,6 @@ Rails.application.routes.draw do
     resources :lokasis, only: [:index, :create, :update, :destroy]
 	end
 
-  #root 'templates#index'
-
   get '/dashboard' => 'templates#index'
   get '/rotis' => 'templates#index'
   get '/lokasis' => 'templates#index'
