@@ -55,5 +55,4 @@ class Api::RotiSalesController < Api::BaseController
        end
     end
   end
-
 end
