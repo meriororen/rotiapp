@@ -4,8 +4,9 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # config.secret_key = '9b3203b0c23e8eeb123730d8aafcf8671e589f6f73545f68735249aefd6b2e2e48ffcc4009ce22d49363a5457e4d4b46b779e9462d41dcddc55c1bdf63893c2b'
+  # config.secret_key = '62fed82f93c93cac60581718cf29e5726c85ba1f93e2c3b5f9915304de526414c1ba2788904d7acf9a5720e9852edb51f28029ef203e5db2436b5680fec737a0'
 
+  config.secret_key = '66001b16aba0b152991b32f000ca0ed055a785d2f30c3e4704c98507ebade00c6dc6da934d31109cb071748a6e4fcc3d57ac050cd8d40e18ebda9dbab1c34e08'
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -59,7 +60,7 @@ Devise.setup do |config|
   # given strategies, for example, `config.http_authenticatable = [:database]` will
   # enable it only for database authentication. The supported strategies are:
   # :database      = Support basic authentication with authentication key + password
-  config.http_authenticatable = true
+  # config.http_authenticatable = false
 
   # If 401 status code should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
@@ -77,7 +78,7 @@ Devise.setup do |config|
   # Notice that if you are skipping storage for all authentication paths, you
   # may want to disable generating routes to Devise's sessions controller by
   # passing skip: :sessions to `devise_for` in your config/routes.rb
-  config.skip_session_storage = [:http_auth, :token_auth]
+  config.skip_session_storage = [:http_auth]
 
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX
@@ -97,7 +98,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = '6e2a510abb4f4a48192e81cc7be614e0665dfd615309fb4e1287b74b99c5b9c94c007587fe13f253760939b0b29100f828c5bc445b63997ba718b6b3908dd9a5'
+  # config.pepper = '7b017d7f4d370f13f5137db383c225dcc5fe7ac946024b4a7184801c38c54682fa558e4d1c3a8d616faab730b30bd64867f067e686a7f363c0e3c708c4ebddeb'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
